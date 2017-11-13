@@ -6,7 +6,7 @@
     <Version>1.4.0$(VersionSuffix)</Version>
     <Company />
     <Product>Serialize.Linq.NetStandard16</Product>
-    <Authors>Bryan Thornbury;</Authors>
+    <Authors>Sascha Kiefer;Bryan Thornbury;</Authors>
     <Description>C# library to serialize LINQ expressions</Description>
     <Copyright>Copyright © 2012-2017</Copyright>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
