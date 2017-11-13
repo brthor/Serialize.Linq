@@ -8,7 +8,7 @@ script:
   - dotnet test src/Serialize.Linq.NetStandard16.Tests/Serialize.Linq.NetStandard16.Tests.csproj --configuration Debug
   - dotnet test src/Serialize.Linq.NetStandard16.Tests/Serialize.Linq.NetStandard16.Tests.csproj --configuration Release
 after_success:
- - (cd src/Serialize.Linq.NetStandard16 && bash publish.sh Serialize.Linq.NetStandard16)
+ - (cd src/Serialize.Linq.NetStandard16 && bash ../../publish.sh Serialize.Linq.NetStandard16)
 cache:
   directories:
   - $HOME/.nuget
