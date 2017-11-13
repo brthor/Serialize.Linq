@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -188,23 +189,40 @@ namespace Serialize.Linq.Factories
         /// <returns></returns>
         private ExpressionNode ResolveMethodCallExpression(MethodCallExpression methodCallExpression)
         {
-            var memberExpression = methodCallExpression.Object as MemberExpression;
-            if (memberExpression != null)
+//            var memberExpression = methodCallExpression.Object as MemberExpression;
+//            if (memberExpression != null)
+//            {
+//                object constantValue;
+//                Type constantValueType;
+//                if (this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue, out constantValueType))
+//                {
+//                    if (methodCallExpression.Arguments.Count == 0)
+//                        return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
+//                }
+//            }
+            // Special Case ToString()
+            if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
             {
-                object constantValue;
-                Type constantValueType;
-                if (this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue, out constantValueType))
+                return EvaluateMethodCallToConstantExpression(methodCallExpression);
+            }
+            // Special case dict lookup, TODO: what else can we special case, is there a safe set?
+            if (methodCallExpression.Method.Name == "get_Item" && methodCallExpression.Object is MemberExpression)
+            {
+                var memberExpression = (MemberExpression) methodCallExpression.Object;
+                if (memberExpression.Expression is ConstantExpression &&
+                    ((ConstantExpression) memberExpression.Expression).Value is IDictionary)
                 {
-                    if (methodCallExpression.Arguments.Count == 0)
-                        return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
+                    return EvaluateMethodCallToConstantExpression(methodCallExpression);
                 }
             }
-            else if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
-            {
-                var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
-                return new ConstantExpressionNode(this, constantValue);
-            }
+            
             return base.Create(methodCallExpression);
+        }
+
+        private ExpressionNode EvaluateMethodCallToConstantExpression(MethodCallExpression methodCallExpression)
+        {
+            var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
+            return new ConstantExpressionNode(this, constantValue);
         }
 
         /// <summary>
