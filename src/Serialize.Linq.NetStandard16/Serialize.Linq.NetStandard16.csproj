@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Serialize.Linq</RootNamespace>
     <Version>1.4.0$(VersionSuffix)</Version>
     <Company />
@@ -11,7 +10,6 @@
     <Copyright>Copyright © 2012-2017</Copyright>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\Serialize.Linq\Exceptions\InvalidTypeException.cs" Link="Exceptions\InvalidTypeException.cs" />
     <Compile Include="..\Serialize.Linq\Exceptions\MemberNotFoundException.cs" Link="Exceptions\MemberNotFoundException.cs" />
@@ -74,8 +72,9 @@
     <Compile Include="..\Serialize.Linq\Serializers\SerializerBase.cs" Link="Serializers\SerializerBase.cs" />
     <Compile Include="..\Serialize.Linq\Serializers\TextSerializer.cs" Link="Serializers\TextSerializer.cs" />
     <Compile Include="..\Serialize.Linq\Serializers\XmlSerializer.cs" Link="Serializers\XmlSerializer.cs" />
+    <Compile Include="..\Serialize.Linq\Serializers\NewtonSoftJsonSerializer.cs" Link="Serializers\NewtonSoftJsonSerializer.cs" />
+    <Compile Include="..\Serialize.Linq\Serializers\JsonPrimitiveConverter.cs" Link="Serializers\JsonPrimitiveConverter.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Exceptions\" />
@@ -83,12 +82,11 @@
     <Folder Include="Serializers\" />
     <Folder Include="Nodes\" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.0" />
+    <PackageReference Include="NewtonSoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
   </ItemGroup>
-
 </Project>

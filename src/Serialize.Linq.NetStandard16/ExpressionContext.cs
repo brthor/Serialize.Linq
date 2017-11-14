@@ -11,7 +11,7 @@ namespace Serialize.Linq
     {
         protected override IEnumerable<Assembly> GetAssemblies()
         {
-#if !NETCOREAPP2_0 && !NETCOREAPP1_1 && !NETSTANDARD1_6
+#if !NETCOREAPP2_0 && !NETCOREAPP1_1 && !NETSTANDARD2_0
             return AppDomain.CurrentDomain.GetAssemblies();
 #else
             var depContext = DependencyContext.Default;

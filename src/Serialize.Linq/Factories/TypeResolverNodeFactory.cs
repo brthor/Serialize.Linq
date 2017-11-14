@@ -210,9 +210,10 @@ namespace Serialize.Linq.Factories
             {
                 var memberExpression = (MemberExpression) methodCallExpression.Object;
                 if (memberExpression.Expression is ConstantExpression &&
-                    ((ConstantExpression) memberExpression.Expression).Value is IDictionary)
+                    typeof(IDictionary).IsAssignableFrom(memberExpression.Type))
                 {
-                    return EvaluateMethodCallToConstantExpression(methodCallExpression);
+                    var ret = EvaluateMethodCallToConstantExpression(methodCallExpression);
+                    return ret;
                 }
             }
             
